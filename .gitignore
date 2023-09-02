@@ -1,7 +1,7 @@
 .vscode
 .romfs
 build
-*.3ds
+*.3dsx
 *.elf
 *.lst
 *.smdh
