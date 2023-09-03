@@ -8,5 +8,6 @@ NOTE: i did not put all gems to compile, because some gems won't compile. You ca
 **Using compile**:<br>To use compile instead of bytecode, open `nintendo_3ds.rb` and uncomment `conf.gem :core => 'mruby-compiler'`. <br> Now open `main.c` and modify `mrb_load_irep_file(mrb, f)` to `mrb_load_file(mrb, f)`.<br>Remember to also change the file path, and move the `main.rb` onto `romfs/ruby`
 
 ### TODO
-- Make the Makefile automatically convert Ruby files to bytecode.
-- And a bunch of other stuff to do with the Makefile.
+- Make the Makefile automatically convert Ruby files to bytecode. And a bunch of other stuff to do with the Makefile.
+- Add more bindings.
+- Somehow make Ruby exit and return to the C code.
