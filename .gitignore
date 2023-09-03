@@ -1,5 +1,5 @@
 .vscode
-.romfs
+romfs
 build
 *.3dsx
 *.elf
