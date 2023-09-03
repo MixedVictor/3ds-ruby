@@ -46,7 +46,7 @@ static mrb_value mrb_ctru_hid_scan_input(mrb_state *mrb, mrb_value obj)
     hidScanInput();
     return mrb_nil_value();
 }
-static mrb_value mrb_ctru_hid_keys_down(mrb_state *mrb, mrb_value obj)
+static mrb_value mrb_ctru_hid_keys_down(mrb_state *mrb, mrb_value self)
 {
     return mrb_fixnum_value(hidKeysDown());
 }
