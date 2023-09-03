@@ -10,4 +10,4 @@ NOTE: i did not put all gems to compile, because some gems won't compile. You ca
 ### TODO
 - Make the Makefile automatically convert Ruby files to bytecode. And a bunch of other stuff to do with the Makefile.
 - Add more bindings.
-- Somehow make Ruby exit and return to the C code.
+- <s>Somehow make Ruby exit and return to the C code.
