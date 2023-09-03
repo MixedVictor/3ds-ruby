@@ -9,6 +9,8 @@ MRuby::CrossBuild.new('nintendo_3ds_devkitARM') do |conf|
   conf.gem :core => 'mruby-print'
   conf.gem :core => 'mruby-time'
   conf.gem :core => 'mruby-random'
+  # Add exit JIC
+  conf.gem :core => 'mruby-exit'
 
   DEVKITPRO_PATH = '/opt/devkitpro'
   DEVKITARM_PATH = '/opt/devkitpro/devkitARM'

@@ -26,19 +26,25 @@ int main(void)
         {
             mrb_load_irep_file(mrb, f);
             if (mrb->exc)
+            {
+                consoleClear();
                 mrb_p(mrb, mrb_obj_value(mrb->exc));
+                printf("Ruby code execution finished. Press START to exit.");
+                while (aptMainLoop())
+                {
+                    hidScanInput();
+                    if (hidKeysDown() == KEY_START)
+                        break;
+
+                    gfxFlushBuffers();
+                    gfxSwapBuffers();
+                    gspWaitForVBlank();
+                }
+            }
         }
         mrb_close(mrb);
         fclose(f);
     }
-
-    while (aptMainLoop())
-    {
-        gfxFlushBuffers();
-        gfxSwapBuffers();
-        gspWaitForVBlank();
-    }
-    
     gfxExit();
     return 0;
 }

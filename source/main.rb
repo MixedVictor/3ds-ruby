@@ -1,4 +1,4 @@
-Ctru::Console.init(Ctru::Gfx::GFX_TOP)
+Ctru::Console.init(Ctru::Gfx::GFX_TOP, nil)
 
 class Concat
     def initialize(str, strs)
@@ -20,20 +20,26 @@ $conc = Concat.new($my_str, $my_strs)
 
 def print_concat
     puts $conc.rand_strs_on_str
-    puts "Press A to refresh, or START to exit."
+    puts "Press A or touch screen to refresh, or START to exit Ruby."
 end
 
 print_concat
 
-while true
-    Ctru::Control.hid_scan_input
+while Ctru::Apt::main_loop
+    Ctru::Hid.scan_input
     
-    if (Ctru::Control.hid_keys_down == Ctru::Hid::KEY_A)
+    if (Ctru::Hid.keys_down == Ctru::Hid::KEY_A ||
+        Ctru::Hid.keys_down == Ctru::Hid::KEY_TOUCH
+        )
         Ctru::Console.clear
         print_concat
         puts "Refreshed!"
     end
-    if (Ctru::Control.hid_keys_down == Ctru::Hid::KEY_START)
-        # TODO: exit this.
-    end    
+    if (Ctru::Hid.keys_down == Ctru::Hid::KEY_START)
+        exit
+    end
+
+    Ctru::Gfx.flush_buffers
+    Ctru::Gfx.swap_buffers
+    Ctru::Gsp.wait_for_vblank
 end

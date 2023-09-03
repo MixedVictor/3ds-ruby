@@ -39,6 +39,7 @@ SOURCES		:=	source
 #GRAPHICS	:=	gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
+ROMFS_RUBY	:=	$(ROMFS)/ruby
 #GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -163,7 +164,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(ROMFS) $(BUILD) $(MRBFILES) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD) $(ROMFS) $(ROMFS_RUBY) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 $(BUILD):
@@ -172,6 +173,10 @@ $(BUILD):
 $(ROMFS):
 	@echo "Creating $(ROMFS)"
 	@mkdir -p $@/ruby
+
+$(ROMFS_RUBY)/%.mrb: $(SOURCES)/%.rb
+	@echo "Compiling $< to $@"
+	@mrbc -o $@ $<
 
 ifneq ($(GFXBUILD),$(BUILD))
 $(GFXBUILD):
@@ -200,10 +205,6 @@ else
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-$(ROMFS)/ruby/%.mrb: $(SOURCES)/%.rb
-	@echo "Compiling $< to $@"
-	@mrbc -o $@ $<
-
 $(OUTPUT).3dsx	:	$(OUTPUT).elf $(_3DSXDEPS)
 
 $(OFILES_SOURCES) : $(HFILES)
