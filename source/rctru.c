@@ -9,7 +9,7 @@ static mrb_value mrb_ctru_apt_main_loop(mrb_state *mrb, mrb_value self)
 
 // PrintConsole class
 
-struct RClass *printconsole;
+// struct RClass *printconsole;
 // static void printconsole_free(mrb_state *mrb, void *p)
 // {
 //     close((int)p);
@@ -92,7 +92,7 @@ void mrb_ctru_gem_init(mrb_state *mrb)
     mrb_define_class_method(mrb, console, "clear", mrb_ctru_console_clear, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, console, "select", mrb_ctru_console_select, MRB_ARGS_REQ(1));
 
-    printconsole = mrb_define_module_under(mrb, console, "PrintConsole");
+    // printconsole = mrb_define_module_under(mrb, console, "PrintConsole");
     // mrb_define_class_method(mrb, printconsole, "new", mrb_ctru_console_printconsole_new, MRB_ARGS_NONE());
 
     struct RClass *gfx = mrb_define_module_under(mrb, ctru, "Gfx");
