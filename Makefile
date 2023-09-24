@@ -39,7 +39,6 @@ SOURCES		:=	source
 #GRAPHICS	:=	gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
-ROMFS_RUBY	:=	$(ROMFS)/ruby
 #GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -83,6 +82,7 @@ export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
+RBFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.rb)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 PICAFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.v.pica)))
 SHLISTFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.shlist)))
@@ -114,9 +114,6 @@ export ROMFS_T3XFILES	:=	$(patsubst %.t3s, $(GFXBUILD)/%.t3x, $(GFXFILES))
 export T3XHFILES		:=	$(patsubst %.t3s, $(BUILD)/%.h, $(GFXFILES))
 #---------------------------------------------------------------------------------
 endif
-#---------------------------------------------------------------------------------
-export RBFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.rb)))
-export MRBFILES	:=	$(patsubst $(SOURCES)/%.rb,$(ROMFS)/ruby/%.mrb,$(RBFILES))
 #---------------------------------------------------------------------------------
 
 export OFILES_SOURCES 	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
@@ -164,17 +161,17 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) $(ROMFS) $(ROMFS_RUBY) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD) $(ROMFS) $(ROMFS)/main.mrb $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-$(BUILD):
+$(ROMFS):
+	@echo "Creating $(ROMFS)."
 	@mkdir -p $@
 
-$(ROMFS):
-	@echo "Creating $(ROMFS)"
-	@mkdir -p $@/ruby
+$(BUILD): 
+	@mkdir -p $@
 
-$(ROMFS_RUBY)/%.mrb: $(SOURCES)/%.rb
+$(ROMFS)/main.mrb: $(RBFILES)
 	@echo "Compiling $< to $@"
 	@mrbc -o $@ $<
 

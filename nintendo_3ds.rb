@@ -4,12 +4,10 @@ MRuby::CrossBuild.new('nintendo_3ds_devkitARM') do |conf|
   conf.toolchain :gcc
 
   # I did not put all gems, so you'll have to add them if you want to.
-  # Also, 'mruby-compiler' might be disabled since i prefer compiling the ruby code directly to bytecode.
   # conf.gem :core => 'mruby-compiler'
   conf.gem :core => 'mruby-print'
   conf.gem :core => 'mruby-time'
   conf.gem :core => 'mruby-random'
-  # Add exit JIC
   conf.gem :core => 'mruby-exit'
 
   DEVKITPRO_PATH = '/opt/devkitpro'

@@ -1,19 +1,45 @@
 #include "rctru.h"
 
 // Apt class.
+
 static mrb_value mrb_ctru_apt_main_loop(mrb_state *mrb, mrb_value self)
 {
     return mrb_fixnum_value(aptMainLoop());
 }
 
+// PrintConsole class
+
+struct RClass *printconsole;
+// static void printconsole_free(mrb_state *mrb, void *p)
+// {
+//     close((int)p);
+// }
+// static const struct mrb_data_type printconsole_data_type = {
+//     "PrintConsole",
+//     printconsole_free};
+// static mrb_value mrb_ctru_console_printconsole_new(mrb_state *mrb, mrb_value self)
+// {
+//     return mrb_obj_value(Data_Wrap_Struct(
+//         mrb,
+//         printconsole,
+//         &printconsole_data_type,
+//         (PrintConsole *)mrb_malloc(mrb, sizeof(PrintConsole))));
+// }
+
 // Console class.
+
 static mrb_value mrb_ctru_console_init(mrb_state *mrb, mrb_value self)
 {
-    mrb_int screen;
+    gfxScreen_t screen;
     PrintConsole *console;
     mrb_get_args(mrb, "io", &screen, &console);
-    consoleInit(screen, console);
-    return self;
+    return mrb_fixnum_value((int)consoleInit(screen, console));
+}
+static mrb_value mrb_ctru_console_select(mrb_state *mrb, mrb_value self)
+{
+    PrintConsole *console;
+    mrb_get_args(mrb, "o", &console);
+    return mrb_fixnum_value((int)consoleSelect(console));
 }
 static mrb_value mrb_ctru_console_clear(mrb_state *mrb, mrb_value obj)
 {
@@ -22,6 +48,7 @@ static mrb_value mrb_ctru_console_clear(mrb_state *mrb, mrb_value obj)
 }
 
 // Gfx class.
+
 static mrb_value mrb_ctru_gfx_flush_buffers(mrb_state *mrb, mrb_value obj)
 {
     gfxFlushBuffers();
@@ -34,6 +61,7 @@ static mrb_value mrb_ctru_gfx_swap_buffers(mrb_state *mrb, mrb_value obj)
 }
 
 // Gsp class.
+
 static mrb_value mrb_ctru_gsp_wait_for_vblank(mrb_state *mrb, mrb_value obj)
 {
     gspWaitForVBlank();
@@ -41,6 +69,7 @@ static mrb_value mrb_ctru_gsp_wait_for_vblank(mrb_state *mrb, mrb_value obj)
 }
 
 // Hid class.
+
 static mrb_value mrb_ctru_hid_scan_input(mrb_state *mrb, mrb_value obj)
 {
     hidScanInput();
@@ -61,6 +90,10 @@ void mrb_ctru_gem_init(mrb_state *mrb)
     struct RClass *console = mrb_define_module_under(mrb, ctru, "Console");
     mrb_define_class_method(mrb, console, "init", mrb_ctru_console_init, MRB_ARGS_REQ(2));
     mrb_define_class_method(mrb, console, "clear", mrb_ctru_console_clear, MRB_ARGS_NONE());
+    mrb_define_class_method(mrb, console, "select", mrb_ctru_console_select, MRB_ARGS_REQ(1));
+
+    printconsole = mrb_define_module_under(mrb, console, "PrintConsole");
+    // mrb_define_class_method(mrb, printconsole, "new", mrb_ctru_console_printconsole_new, MRB_ARGS_NONE());
 
     struct RClass *gfx = mrb_define_module_under(mrb, ctru, "Gfx");
     mrb_define_class_method(mrb, gfx, "flush_buffers", mrb_ctru_gfx_flush_buffers, MRB_ARGS_NONE());
