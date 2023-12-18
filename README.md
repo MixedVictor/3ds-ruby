@@ -10,9 +10,9 @@ Firstly, drag and drop the `nintendo_3ds.rb` onto mruby's build_config folder an
 # Clear the screen to make it nicer.
 clear
 # Firstly, compile and install the system's mruby.
-sudo rake all
+sudo ./minirake all
 # Now, we compile 3DS's mruby.
-sudo rake MRUBY_CONFIG=nintendo_3ds build
+sudo ./minirake MRUBY_CONFIG=nintendo_3ds all
 # Copy the recently compiled library folder to portlibs.
 sudo cp -r build/nintendo_3ds_devkitARM/lib /opt/devkitpro/portlibs/3ds/.
 # Copy the mruby's include folder to portlibs.
