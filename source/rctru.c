@@ -7,25 +7,6 @@ static mrb_value mrb_ctru_apt_main_loop(mrb_state *mrb, mrb_value self)
     return mrb_fixnum_value(aptMainLoop());
 }
 
-// PrintConsole class
-
-// struct RClass *printconsole;
-// static void printconsole_free(mrb_state *mrb, void *p)
-// {
-//     close((int)p);
-// }
-// static const struct mrb_data_type printconsole_data_type = {
-//     "PrintConsole",
-//     printconsole_free};
-// static mrb_value mrb_ctru_console_printconsole_new(mrb_state *mrb, mrb_value self)
-// {
-//     return mrb_obj_value(Data_Wrap_Struct(
-//         mrb,
-//         printconsole,
-//         &printconsole_data_type,
-//         (PrintConsole *)mrb_malloc(mrb, sizeof(PrintConsole))));
-// }
-
 // Console class.
 
 static mrb_value mrb_ctru_console_init(mrb_state *mrb, mrb_value self)
