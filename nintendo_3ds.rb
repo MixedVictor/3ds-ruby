@@ -1,4 +1,4 @@
-# Tested on linux
+# Tested on Arch Linux
 # Based on the nintendo_switch.rb file
 MRuby::CrossBuild.new('nintendo_3ds_devkitARM') do |conf|
   conf.toolchain :gcc
@@ -10,12 +10,11 @@ MRuby::CrossBuild.new('nintendo_3ds_devkitARM') do |conf|
   conf.gem :core => 'mruby-random'
   conf.gem :core => 'mruby-exit'
 
-  DEVKITPRO_PATH = '/opt/devkitpro'
   DEVKITARM_PATH = '/opt/devkitpro/devkitARM'
 
   include_paths = [
     "#{DEVKITARM_PATH}/arm-none-eabi/include",
-    "#{DEVKITPRO_PATH}/libctru/include",
+    "/opt/devkitpro/libctru/include",
   ]
 
   conf.cc do |cc|
