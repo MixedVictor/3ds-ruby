@@ -9,19 +9,6 @@ static mrb_value mrb_ctru_apt_main_loop(mrb_state *mrb, mrb_value self)
 
 // Console class.
 
-static mrb_value mrb_ctru_console_init(mrb_state *mrb, mrb_value self)
-{
-    gfxScreen_t screen;
-    PrintConsole *console;
-    mrb_get_args(mrb, "io", &screen, &console);
-    return mrb_fixnum_value((int)consoleInit(screen, console));
-}
-static mrb_value mrb_ctru_console_select(mrb_state *mrb, mrb_value self)
-{
-    PrintConsole *console;
-    mrb_get_args(mrb, "o", &console);
-    return mrb_fixnum_value((int)consoleSelect(console));
-}
 static mrb_value mrb_ctru_console_clear(mrb_state *mrb, mrb_value obj)
 {
     consoleClear();
@@ -69,12 +56,7 @@ void mrb_ctru_gem_init(mrb_state *mrb)
     mrb_define_class_method(mrb, apt, "main_loop", mrb_ctru_apt_main_loop, MRB_ARGS_NONE());
 
     struct RClass *console = mrb_define_module_under(mrb, ctru, "Console");
-    mrb_define_class_method(mrb, console, "init", mrb_ctru_console_init, MRB_ARGS_REQ(2));
     mrb_define_class_method(mrb, console, "clear", mrb_ctru_console_clear, MRB_ARGS_NONE());
-    mrb_define_class_method(mrb, console, "select", mrb_ctru_console_select, MRB_ARGS_REQ(1));
-
-    // printconsole = mrb_define_module_under(mrb, console, "PrintConsole");
-    // mrb_define_class_method(mrb, printconsole, "new", mrb_ctru_console_printconsole_new, MRB_ARGS_NONE());
 
     struct RClass *gfx = mrb_define_module_under(mrb, ctru, "Gfx");
     mrb_define_class_method(mrb, gfx, "flush_buffers", mrb_ctru_gfx_flush_buffers, MRB_ARGS_NONE());

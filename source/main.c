@@ -7,12 +7,11 @@
 
 void exit_loop(void)
 {
-    printf("\nPress START or touch screen to exit.");
+    printf("\nPress any key to exit.");
     while (aptMainLoop())
     {
         hidScanInput();
-        if (hidKeysDown() == KEY_START ||
-            hidKeysDown() == KEY_TOUCH)
+        if (hidKeysDown())
             break;
 
         gfxFlushBuffers();
@@ -24,7 +23,7 @@ void exit_loop(void)
 int main(void)
 {
     gfxInitDefault();
-    consoleInit(GFX_BOTTOM, NULL);
+    consoleInit(GFX_TOP, NULL);
 
     Result rc = romfsInit();
     if (rc)
@@ -54,8 +53,6 @@ int main(void)
                 mrb_p(mrb, mrb_obj_value(mrb->exc));
                 exit_loop();
             }
-            else
-                gfxExit();
         }
         mrb_close(mrb);
         fclose(f);

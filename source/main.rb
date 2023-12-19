@@ -1,13 +1,3 @@
-# bs = Ctru::Console::PrintConsole.new
-# ts = Ctru::Console::PrintConsole.new
-
-# Ctru::Console.init(Ctru::Gfx::GFX_TOP, ts)
-# Ctru::Console.init(Ctru::Gfx::GFX_BOTTOM, bs)
-
-# Ctru::Console.select(ts)
-
-Ctru::Console.init(Ctru::Gfx::GFX_TOP, nil)
-
 class Concat
     def initialize(str, strs)
         @str = str
